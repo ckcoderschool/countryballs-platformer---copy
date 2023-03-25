@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const springanim = SpriteKind.create()
+    export const Vehicle = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     Polandball.vy = -200
@@ -85,10 +86,12 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     Polandball.vx = 0
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
+    list[level_tracker] = 1
     level_tracker = 0
     tiles.setCurrentTilemap(tilemap`world 1`)
+    sprites.destroy(minecart)
     Polandball.ay = 0
-    tiles.placeOnTile(Polandball, tiles.getTileLocation(7, 2))
+    tiles.placeOnTile(Polandball, tiles.getTileLocation(9, 4))
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`Spring`, function (sprite, location) {
 	
@@ -112,7 +115,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, fu
 sprites.onOverlap(SpriteKind.Player, SpriteKind.springanim, function (sprite, otherSprite) {
     Polandball.vy = -550
     animation.runImageAnimation(
-    Spring,
+    otherSprite,
     assets.animation`spring bounce animation`,
     100,
     false
@@ -123,7 +126,9 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, func
         level_tracker = 2
         tiles.setCurrentTilemap(tilemap`level 2`)
         create_spring()
-        Spring.setPosition(85, 6)
+        minecart = sprites.create(assets.image`spritecart`, SpriteKind.Vehicle)
+        spring_1.setPosition(85, 6)
+        spring_2.setPosition(95, 7)
         Polandball.ay = 400
         sprites.destroy(spring_9)
         sprites.destroy(spring_8)
@@ -143,11 +148,13 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, func
         sprites.destroy(spring_18)
         sprites.destroy(spring_19)
     } else if (location.column == 7 && location.row == 1) {
-        sprites.destroy(Spring)
+        for (let value of sprites.allOfKind(SpriteKind.springanim)) {
+            sprites.destroy(value)
+        }
         tiles.setCurrentTilemap(tilemap`level1`)
         level_tracker = 1
         Polandball.ay = 400
-    } else if (location.column == 4 && location.row == 7) {
+    } else if (location.column == 4 && location.row == 7 && list[2] == 1) {
         create_spring()
         tiles.setCurrentTilemap(tilemap`level3`)
         level_tracker = 3
@@ -156,7 +163,7 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, func
     	
     }
 })
-let Spring: Sprite = null
+let minecart: Sprite = null
 let spring_19: Sprite = null
 let spring_18: Sprite = null
 let spring_17: Sprite = null
@@ -176,6 +183,7 @@ let spring_4: Sprite = null
 let spring_3: Sprite = null
 let spring_2: Sprite = null
 let spring_1: Sprite = null
+let list: number[] = []
 let Polandball: Sprite = null
 let level_tracker = 0
 info.setScore(0)
@@ -185,3 +193,4 @@ Polandball = sprites.create(assets.image`Polandball`, SpriteKind.Player)
 Polandball.ay = 400
 scene.cameraFollowSprite(Polandball)
 tiles.setCurrentTilemap(tilemap`level1`)
+list = [0, 0, 0]

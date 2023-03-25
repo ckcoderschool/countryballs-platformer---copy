@@ -102,6 +102,27 @@ f c c c f . . . . . . f c c c f
 . . . . . f f f f f f . . . . . 
 . . . . . . . . . . . . . . . . 
 `;
+            case "image5":
+            case "spritecart":return img`
+bbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbb
+bbffffffffffffffbb
+bbffffffffffffffbb
+bbffccccccccccffbb
+bbffccccccccccffbb
+bbccccccccccccccbb
+bbccccccccccccccbb
+bbccccccccccccccbb
+bbccccccccccccccbb
+bbccccccccccccccbb
+bbccaaaaaaaaaaccbb
+bbccaaaaaaaaaaccbb
+bbaaaaaaaaaaaaaabb
+bbaaaaaaaaaaaaaabb
+bbaaaaaaaaaaaaaabb
+bbaaaaaaaaaaaaaabb
+bbbbbbbbbbbbbbbbbb
+`;
         }
         return null;
     })
